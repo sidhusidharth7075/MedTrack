@@ -58,7 +58,7 @@ Here are a few enhancements that could take MedTrack to the next level:
 - 📹 **Video consultations** via third-party API (Zoom, Jitsi, etc.)
 - 📲 **Push notifications** (PWA or mobile app)
 - 🔍 **Searchable appointment records**
-- 🔐 **OAuth login (Google, Facebook)** support
+- 🔐 **OAuth login ** support
 
 ---
 
