@@ -3,6 +3,23 @@
 MedTrack is a Flask-based web application designed for managing healthcare appointments with AWS integration. It allows users to register, book appointments, receive email and SMS notifications, and stores all user and appointment data securely using **Amazon DynamoDB** and **Amazon SNS**.
 
 
+--
+## .env file
+
+```bash
+SECRET_KEY=<your_secret_key_here>
+EMAIL_USER=<your_email_address>
+EMAIL_PASS=<your_email_password_or_app_password>
+AWS_ACCESS_KEY_ID=<your_aws_access_key>
+AWS_SECRET_ACCESS_KEY=<your_aws_secret_key>
+AWS_REGION=<your_aws_region>
+DYNAMODB_USERS_TABLE=Users
+DYNAMODB_APPOINTMENTS_TABLE=Appointments
+SNS_TOPIC_ARN=<your_topic_arn> # optional
+
+```
+
+
 
 ## 🛠️ Installation
 
