@@ -26,7 +26,7 @@ SNS_TOPIC_ARN=<your_topic_arn> # optional
 ### 1. Clone the Repository
 ```bash
 git clone https://github.com/your-username/HealthCare.git
-cd ServiceScheduler
+cd HealthCare
 ```
 
 ### 2. Create and Activate a Virtual Environment
