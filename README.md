@@ -36,8 +36,8 @@ SENDER_PASSWORD=your_gmail_app_password
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/your-username/HealthCare.git
-cd HealthCare
+git clone https://github.com/sidhusidharth7075/MedTrack.git
+cd MedTrack
 ```
 
 ### 2. Create and Activate a Virtual Environment
