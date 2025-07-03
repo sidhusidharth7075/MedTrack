@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+  body {
+    background-color: #f8f9fa;
+  }
+
+  .card-wrapper {
+    padding: 2rem;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  }
+
+  .table-responsive {
+    margin-top: 1rem;
+  }
+
+  .form-control:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+  }
+
+  .btn-sm {
+    padding: 0.4rem 0.75rem;
+    font-size: 0.875rem;
+    border-radius: 6px;
+  }
+
+  .badge {
+    font-size: 0.85rem;
+    padding: 0.45em 0.75em;
+  }
+
+  @media (max-width: 767.98px) {
+    .card-wrapper {
+      padding: 1.25rem;
+    }
+
+    h3.text-center {
+      font-size: 1.5rem;
+    }
+
+    .table {
+      font-size: 0.95rem;
+    }
+
+    .btn-sm {
+      width: 100%;
+      margin-top: 0.5rem;
+    }
+  }
+</style>
+
+<div class="container my-5">
+  <div class="card-wrapper">
+    <h3 class="text-center mb-3 fw-bold">Search Results</h3>
+    <p class="text-center">Showing results for: <strong>"{{ search_query }}"</strong></p>
+
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover align-middle">
+        <thead class="table-light">
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Patient</th>
+            <th scope="col">Date</th>
+            <th scope="col">Status</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for appointment in results %}
+          <tr>
+            <td>{{ appointment.appointment_id[:8] }}...</td>
+            <td>{{ appointment.patient_name }}</td>
+            <td>{{ appointment.appointment_date[:10] }}</td>
+            <td>
+              {% if appointment.status == 'pending' %}
+              <span class="badge bg-warning text-dark">{{ appointment.status|capitalize }}</span>
+              {% elif appointment.status == 'completed' %}
+              <span class="badge bg-success">{{ appointment.status|capitalize }}</span>
+              {% else %}
+              <span class="badge bg-secondary">{{ appointment.status|capitalize }}</span>
+              {% endif %}
+            </td>
+            <td>
+              <a href="{{ url_for('view_appointment_doctor', appointment_id=appointment.appointment_id) }}" class="btn btn-outline-primary btn-sm">View</a>
+            </td>
+          </tr>
+          {% else %}
+          <tr>
+            <td colspan="5" class="text-center text-muted">No results found.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="text-center mt-4">
+      <a href="{{ url_for('dashboard_doctor') }}" class="btn btn-primary">Back to Dashboard</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

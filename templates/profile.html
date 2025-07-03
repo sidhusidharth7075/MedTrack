@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+  body {
+    background-color: #f8f9fa;
+  }
+
+  .form-section {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+
+  h2.text-center {
+    font-weight: 700;
+  }
+
+  .form-label {
+    font-weight: 600;
+    color: #495057;
+  }
+
+  .form-control {
+    border-radius: 6px;
+  }
+
+  .form-control:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.2);
+  }
+
+  .btn-lg {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 8px;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 767.98px) {
+    .form-section {
+      padding: 1.5rem;
+    }
+
+    .btn-lg {
+      font-size: 1rem;
+      padding: 0.65rem 1.25rem;
+    }
+
+    h2.text-center {
+      font-size: 1.5rem;
+    }
+  }
+
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    .form-section {
+      padding: 2rem;
+    }
+
+    h2.text-center {
+      font-size: 1.75rem;
+    }
+  }
+</style>
+
+<div class="container my-5" data-aos="fade-up">
+  <h2 class="mb-4 text-center fw-bold">My Profile</h2>
+
+  <form method="POST" action="{{ url_for('profile') }}" class="form-section needs-validation" novalidate>
+    <div class="mb-3">
+      <label for="username" class="form-label">Username <span class="text-danger">*</span></label>
+      <input type="text" class="form-control" id="username" name="username" value="{{ user['username'] }}" required aria-required="true">
+    </div>
+
+    <div class="mb-3">
+      <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
+      <input type="email" class="form-control" id="email" name="email" value="{{ user['email'] }}" required aria-required="true">
+    </div>
+
+    <div class="mb-3">
+      <label for="contact" class="form-label">Contact Number</label>
+      <input type="tel" class="form-control" id="contact" name="contact" value="{{ user['contact'] }}" pattern="[0-9]{10}" aria-describedby="contactHelp">
+      <div id="contactHelp" class="form-text">Enter a 10-digit number (optional).</div>
+    </div>
+
+    {% if user['role'] == 'doctor' %}
+    <div class="mb-3">
+      <label for="specialty" class="form-label">Specialty</label>
+      <input type="text" class="form-control" id="specialty" name="specialty" value="{{ user.get('specialty', '') }}">
+    </div>
+
+    <div class="mb-3">
+      <label for="qualifications" class="form-label">Qualifications</label>
+      <input type="text" class="form-control" id="qualifications" name="qualifications" value="{{ user.get('qualifications', '') }}">
+    </div>
+    {% endif %}
+
+    <div class="d-grid gap-2">
+      <button type="submit" class="btn btn-primary btn-lg">Update Profile</button>
+    </div>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+  body {
+    background-color: #e9f5ec;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  .error-container {
+    max-width: 600px;
+    margin: 5rem auto;
+    padding: 40px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    color: #2f684e;
+  }
+
+  .error-container h1 {
+    font-size: 96px;
+    margin-bottom: 10px;
+    color: #2f684e;
+  }
+
+  .error-container p {
+    font-size: 20px;
+    margin-bottom: 30px;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: #28a745;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+  }
+
+  .btn:hover {
+    background-color: #218838;
+  }
+</style>
+
+<div class="container">
+  <div class="error-container" role="alert" aria-live="polite">
+    <h1>404</h1>
+    <p>Oops! The page you're looking for doesn't exist or has been moved.</p>
+    <a href="{{ url_for('index') }}" class="btn">Back to Home</a>
+  </div>
+</div>
+{% endblock %}

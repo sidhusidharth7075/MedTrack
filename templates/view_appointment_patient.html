@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+  body {
+    background-color: #f8f9fa;
+  }
+
+  .card-wrapper {
+    padding: 2rem;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  }
+
+  .form-control:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+  }
+
+  .badge {
+    font-size: 0.85rem;
+    padding: 0.45em 0.75em;
+    border-radius: 0.4rem;
+  }
+
+  .bg-section {
+    background-color: #f8f9fa;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+  }
+
+  .form-label {
+    font-weight: 600;
+  }
+
+  .btn {
+    min-width: 140px;
+  }
+
+  @media (max-width: 767.98px) {
+    .card-wrapper {
+      padding: 1.25rem;
+    }
+
+    h3 {
+      font-size: 1.5rem;
+    }
+
+    .btn {
+      width: 100%;
+    }
+  }
+</style>
+
+<div class="container my-5">
+  <div class="card-wrapper">
+    <h3 class="text-center mb-4 fw-bold">Appointment Details</h3>
+
+    <!-- Appointment Info -->
+    <div class="bg-section">
+      <h6 class="fw-bold">Appointment Information</h6>
+      <p class="mb-1"><strong>Doctor:</strong> {{ appointment.doctor_name }}</p>
+      <p class="mb-1"><strong>Specialization:</strong> {{ appointment.specialization }}</p>
+      <p class="mb-1">
+        <strong>Status:</strong>
+        {% if appointment.status == 'pending' %}
+        <span class="badge bg-warning text-dark">{{ appointment.status|capitalize }}</span>
+        {% elif appointment.status == 'completed' %}
+        <span class="badge bg-success">{{ appointment.status|capitalize }}</span>
+        {% else %}
+        <span class="badge bg-secondary">{{ appointment.status|capitalize }}</span>
+        {% endif %}
+      </p>
+      <p class="mb-1"><strong>Date:</strong> {{ appointment.appointment_date[:10] }}</p>
+      <p class="mb-0"><strong>Created:</strong> {{ appointment.created_at }}</p>
+    </div>
+
+    <!-- Symptoms -->
+    <div class="bg-section">
+      <h6 class="fw-bold">Your Symptoms</h6>
+      <p class="mb-0 text-capitalize">{{ appointment.symptoms }}</p>
+    </div>
+
+    <!-- Diagnosis Only if Completed -->
+    {% if appointment.status == 'completed' %}
+    <div class="bg-section">
+      <h6 class="fw-bold">Doctor's Diagnosis</h6>
+      <p><strong>Diagnosis:</strong> {{ appointment.diagnosis or 'N/A' }}</p>
+      <p><strong>Treatment Plan:</strong> {{ appointment.treatment_plan or 'N/A' }}</p>
+      <p><strong>Prescription:</strong> {{ appointment.prescription or 'N/A' }}</p>
+    </div>
+    {% endif %}
+
+    <!-- Back Button -->
+    <div class="text-center mt-4">
+      <a href="{{ url_for('dashboard_patient') }}" class="btn btn-primary">Back to Dashboard</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

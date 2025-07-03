@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 90vh;">
+  <div class="card p-4 shadow-sm w-100" style="max-width: 480px; border-radius: 16px;">
+    <h2 class="text-center mb-3 fw-bold">Login to Your Account</h2>
+    <p class="text-center text-muted mb-4">Access your healthcare dashboard to manage appointments.</p>
+
+    <!-- Role Selection -->
+    <div class="row g-3 mb-4">
+      <div class="col-6">
+        <div id="card-patient" class="card role-card selected text-center p-3" onclick="selectLoginRole('patient')">
+          <div class="fs-1 text-primary">👤</div>
+          <p class="mt-2 mb-0 fw-medium">Patient</p>
+        </div>
+      </div>
+      <div class="col-6">
+        <div id="card-doctor" class="card role-card text-center p-3" onclick="selectLoginRole('doctor')">
+          <div class="fs-1 text-danger">🩺</div>
+          <p class="mt-2 mb-0 fw-medium">Doctor</p>
+        </div>
+      </div>
+    </div>
+
+    <form method="POST" action="{{ url_for('login') }}" onsubmit="return validateLoginRole()">
+      <input type="hidden" name="role" id="loginRole" value="patient" />
+
+      <!-- Email -->
+      <div class="mb-3">
+        <label for="email" class="form-label fw-semibold">Email Address</label>
+        <input type="email" class="form-control" id="email" name="email" required placeholder="Enter your email" />
+      </div>
+
+      <!-- Password -->
+      <div class="mb-3">
+        <label for="password" class="form-label fw-semibold">Password</label>
+        <input type="password" class="form-control" id="password" name="password" required placeholder="Enter password" />
+        <div class="form-check mt-2">
+          <input type="checkbox" class="form-check-input" id="showPasswordCheckbox" onclick="togglePassword()" />
+          <label class="form-check-label small" for="showPasswordCheckbox">Show Password</label>
+        </div>
+      </div>
+
+      <!-- Forgot Password -->
+      <div class="text-end mb-3">
+        <a href="#" class="text-decoration-none text-primary small">Forgot password?</a>
+      </div>
+
+      <!-- Submit -->
+      <div class="d-grid mb-3">
+        <button type="submit" class="btn btn-primary fw-semibold">Login</button>
+      </div>
+
+      <p class="text-center small text-muted">
+        Don’t have an account?
+        <a href="{{ url_for('register') }}" class="text-primary text-decoration-none">Register here</a>
+      </p>
+    </form>
+  </div>
+</div>
+
+<style>
+  body {
+    background-color: #f8f9fa;
+  }
+
+  .role-card {
+    border: 2px solid transparent;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+
+  .role-card.selected {
+    border-color: #0d6efd;
+    background-color: #e7f1ff;
+  }
+
+  .btn-primary {
+    background-color: #0d6efd;
+    border: none;
+  }
+
+  .btn-primary:hover {
+    background-color: #0b5ed7;
+  }
+
+  @media (max-width: 576px) {
+    h2 {
+      font-size: 1.5rem;
+    }
+
+    .fs-1 {
+      font-size: 2rem !important;
+    }
+
+    .form-label {
+      font-size: 0.95rem;
+    }
+
+    .btn {
+      font-size: 0.95rem;
+    }
+  }
+</style>
+
+<script>
+function selectLoginRole(role) {
+  document.getElementById('loginRole').value = role;
+  document.getElementById('card-patient').classList.remove('selected');
+  document.getElementById('card-doctor').classList.remove('selected');
+  document.getElementById('card-' + role).classList.add('selected');
+}
+
+function validateLoginRole() {
+  const role = document.getElementById('loginRole').value;
+  if (!role) {
+    alert("Please select your role (Patient or Doctor).");
+    return false;
+  }
+  return true;
+}
+
+function togglePassword() {
+  const passField = document.getElementById("password");
+  passField.type = passField.type === "password" ? "text" : "password";
+}
+</script>
+{% endblock %}

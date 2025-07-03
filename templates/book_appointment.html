@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container my-5">
+  <div class="card-wrapper p-5">
+
+    <h4 class="fw-bold mb-3 text-dark">Book an Appointment</h4>
+    <p class="text-muted">Select a doctor and provide your symptoms to book a consultation.</p>
+
+    <form method="POST" action="{{ url_for('book_appointment') }}">
+
+      <!-- Select Doctor -->
+      <div class="row g-4 mb-4">
+        {% for doctor in doctors %}
+        <div class="col-md-6">
+          <label class="w-100">
+            <input type="radio" class="btn-check" name="doctor_email" value="{{ doctor.email }}" required autocomplete="off">
+            <div class="doctor-card p-4 rounded text-center">
+              <div class="doctor-initial">{{ doctor.name[0]|upper }}</div>
+              <h6 class="mb-1 fw-bold">Dr. {{ doctor.name }}</h6>
+              <small class="text-muted">{{ doctor.specialization }}</small>
+            </div>
+          </label>
+        </div>
+        {% endfor %}
+      </div>
+
+      <!-- Appointment Details -->
+      <div class="row g-3 mb-3">
+        <div class="col-md-6">
+          <label for="appointment_date" class="form-label">Appointment Date</label>
+          <input type="date" class="form-control" id="appointment_date" name="appointment_date" required>
+        </div>
+        <div class="col-md-6">
+          <label for="appointment_time" class="form-label">Appointment Time</label>
+          <input type="time" class="form-control" id="appointment_time" name="appointment_time" required>
+        </div>
+      </div>
+
+      <!-- Symptoms -->
+      <div class="mb-4">
+        <label for="symptoms" class="form-label">Symptoms/Reason for Visit</label>
+        <textarea class="form-control" id="symptoms" name="symptoms" rows="4" placeholder="Please describe your symptoms or reason for consultation..." required></textarea>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Book Appointment</button>
+    </form>
+
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="text-center text-muted mt-5 mb-4">
+  <small>© 2025 HealthCare App. All rights reserved.</small>
+</footer>
+
+<!-- Styles -->
+<style>
+  body {
+    background-color: #eef2f7;
+    font-family: 'Segoe UI', sans-serif;
+  }
+
+  .card-wrapper {
+    border-radius: 12px;
+    background-color: #ffffff;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+  }
+
+  .doctor-card {
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: 2px solid transparent;
+    background-color: #ffffff;
+  }
+
+  .doctor-card:hover,
+  .btn-check:checked + .doctor-card {
+    border-color: #0d6efd;
+    background-color: #f0f8ff;
+    box-shadow: 0 0 10px rgba(13, 110, 253, 0.2);
+  }
+
+  .doctor-initial {
+    width: 60px;
+    height: 60px;
+    background-color: #0d6efd;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 10px auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .form-label {
+    font-weight: 500;
+  }
+
+  .form-control:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.2);
+  }
+
+  .btn-primary {
+    padding: 10px 20px;
+    font-weight: 500;
+  }
+
+  /* ✅ Media query reused from reference */
+  @media (max-width: 575.98px) {
+    .doctor-initial {
+      width: 50px;
+      height: 50px;
+      font-size: 20px;
+    }
+
+    .card-wrapper {
+      padding: 1.5rem;
+    }
+
+    .btn-primary {
+      width: 100%;
+    }
+
+    .form-label {
+      font-size: 0.95rem;
+    }
+
+    h4 {
+      font-size: 1.3rem;
+    }
+  }
+</style>
+{% endblock %}

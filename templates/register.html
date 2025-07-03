@@ -1,0 +1,168 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 95vh;">
+  <div class="card p-4 shadow-sm w-100" style="max-width: 700px; border-radius: 18px;">
+    <h2 class="text-center mb-2 fw-bold">Create Your Account</h2>
+    <p class="text-center text-muted mb-4">Join our healthcare platform to connect with doctors and manage your health.</p>
+
+    <!-- Role Selection -->
+    <div class="row g-3 mb-4">
+      <div class="col-6">
+        <div id="card-patient" class="card role-card selected text-center p-3" onclick="selectRegisterRole('patient')">
+          <div class="fs-1 text-primary">👤</div>
+          <p class="mt-2 mb-0 fw-medium">Patient</p>
+        </div>
+      </div>
+      <div class="col-6">
+        <div id="card-doctor" class="card role-card text-center p-3" onclick="selectRegisterRole('doctor')">
+          <div class="fs-1 text-danger">🩺</div>
+          <p class="mt-2 mb-0 fw-medium">Doctor</p>
+        </div>
+      </div>
+    </div>
+
+    <form method="POST" action="{{ url_for('register') }}">
+      <input type="hidden" name="role" id="role" value="patient">
+
+      <div class="row g-3 mb-3">
+        <div class="col-md-6">
+          <label for="name" class="form-label">Full Name</label>
+          <input type="text" class="form-control" id="name" name="name" required>
+        </div>
+        <div class="col-md-6">
+          <label for="email" class="form-label">Email Address</label>
+          <input type="email" class="form-control" id="email" name="email" required>
+        </div>
+      </div>
+
+      <div class="row g-3 mb-3">
+        <div class="col-md-6">
+          <label for="password" class="form-label">Password</label>
+          <input type="password" class="form-control" id="password" name="password" required>
+        </div>
+        <div class="col-md-6">
+          <label for="confirm_password" class="form-label">Confirm Password</label>
+          <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+        </div>
+      </div>
+
+      <!-- Show Password -->
+      <div class="form-check mb-3">
+        <input type="checkbox" class="form-check-input" id="showPasswordCheckbox" onclick="togglePassword()">
+        <label class="form-check-label small" for="showPasswordCheckbox">Show Password</label>
+      </div>
+
+      <div class="row g-3 mb-3">
+        <div class="col-md-6">
+          <label for="age" class="form-label">Age</label>
+          <input type="number" class="form-control" id="age" name="age" required>
+        </div>
+        <div class="col-md-6">
+          <label for="gender" class="form-label">Gender</label>
+          <select class="form-select" id="gender" name="gender" required>
+            <option value="" selected disabled>Select Gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Specialization (only for doctor) -->
+      <div class="mb-3 specialization-field d-none">
+        <label for="specialization" class="form-label">Specialization</label>
+        <select class="form-select" id="specialization" name="specialization">
+          <option value="" selected disabled>Select Specialization</option>
+          <option value="Cardiology">Cardiology</option>
+          <option value="Dermatology">Dermatology</option>
+          <option value="Neurology">Neurology</option>
+          <option value="Pediatrics">Pediatrics</option>
+          <option value="Psychiatry">Psychiatry</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+
+      <div class="d-grid">
+        <button type="submit" class="btn btn-primary fw-semibold">Register</button>
+      </div>
+    </form>
+
+    <div class="text-center mt-4">
+      <small class="text-muted">Already have an account? <a href="{{ url_for('login') }}" class="text-primary text-decoration-none">Login here</a></small>
+    </div>
+  </div>
+</div>
+
+<!-- Style -->
+<style>
+  body {
+    background-color: #f8f9fa;
+  }
+
+  .role-card {
+    border: 2px solid transparent;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+
+  .role-card.selected {
+    border-color: #0d6efd;
+    background-color: #e7f1ff;
+  }
+
+  .btn-primary {
+    background-color: #0d6efd;
+    border: none;
+  }
+
+  .btn-primary:hover {
+    background-color: #0b5ed7;
+  }
+
+  @media (max-width: 576px) {
+    h2 {
+      font-size: 1.5rem;
+    }
+
+    .fs-1 {
+      font-size: 2rem !important;
+    }
+
+    .form-label {
+      font-size: 0.95rem;
+    }
+
+    .btn {
+      font-size: 0.95rem;
+    }
+  }
+</style>
+
+<!-- Script -->
+<script>
+function selectRegisterRole(role) {
+  document.getElementById('role').value = role;
+  document.getElementById('card-patient').classList.remove('selected');
+  document.getElementById('card-doctor').classList.remove('selected');
+
+  document.getElementById('card-' + role).classList.add('selected');
+
+  const specializationField = document.querySelector('.specialization-field');
+  if (role === 'doctor') {
+    specializationField.classList.remove('d-none');
+  } else {
+    specializationField.classList.add('d-none');
+  }
+}
+
+function togglePassword() {
+  const pass1 = document.getElementById("password");
+  const pass2 = document.getElementById("confirm_password");
+  const type = pass1.type === "password" ? "text" : "password";
+  pass1.type = type;
+  pass2.type = type;
+}
+</script>
+{% endblock %}
