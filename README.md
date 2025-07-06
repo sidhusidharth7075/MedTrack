@@ -13,7 +13,7 @@ FLASK_ENV=development
 PORT=5000
 
 # -------------------- AWS Config --------------------
-AWS_REGION_NAME=ap-south-1
+AWS_REGION_NAME=us-east-1
 USERS_TABLE_NAME=UsersTable
 APPOINTMENTS_TABLE_NAME=AppointmentsTable
 
